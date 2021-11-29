@@ -12,6 +12,11 @@ class Validator {
     return password.contains(new RegExp(pattern));
   }
 
+  bool hasMinLowercase(String password, int lowercaseCount) {
+    String pattern = '^(.*?[a-z]){' + lowercaseCount.toString() + ',}';
+    return password.contains(new RegExp(pattern));
+  }
+
   /// Checks if password has at least numericCount numeric character matches
   bool hasMinNumericChar(String password, int numericCount) {
     String pattern = '^(.*?[0-9]){' + numericCount.toString() + ',}';
@@ -20,8 +25,7 @@ class Validator {
 
   //Checks if password has at least specialCount special character matches
   bool hasMinSpecialChar(String password, int specialCount) {
-    String pattern =
-        r"^(.*?[$&+,\:;/=?@#|'<>.^*()_%!-]){" + specialCount.toString() + ",}";
+    String pattern = r"^(.*?[$&+,\:;/=?@#|'<>.^*()_%!-]){" + specialCount.toString() + ",}";
     return password.contains(new RegExp(pattern));
   }
 }

@@ -42,12 +42,7 @@ class AppHome extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                    child: new TextField(
-                        controller: controller,
-                        decoration: new InputDecoration(
-                            hintText: "Password",
-                            border: new OutlineInputBorder(
-                                borderSide: BorderSide()))),
+                    child: new TextField(controller: controller, decoration: new InputDecoration(hintText: "Password", border: new OutlineInputBorder(borderSide: BorderSide()))),
                   ),
                   new SizedBox(
                     height: 5,
@@ -58,12 +53,12 @@ class AppHome extends StatelessWidget {
                     uppercaseCharCount: 2,
                     numericCharCount: 3,
                     specialCharCount: 1,
+                    lowercaseCharCount: 1,
                     width: 400,
                     height: 150,
                     onSuccess: () {
                       print("Matched");
-                      Scaffold.of(context).showSnackBar(new SnackBar(
-                          content: new Text("Password is matched")));
+                      Scaffold.of(context).showSnackBar(new SnackBar(content: new Text("Password is matched")));
                     },
                   ),
                 ],
