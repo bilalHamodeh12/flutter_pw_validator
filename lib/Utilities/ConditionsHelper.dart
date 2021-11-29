@@ -6,14 +6,24 @@ class ConditionsHelper {
   Map<String, bool>? _selectedCondition;
 
   //Recognize user selected condition from widget constructor to put them on map with their value
-  void setSelectedCondition(int minLength, uppercaseCharCount, numericCharCount, specialCharCount, lowercaseCharCount) {
-    _selectedCondition = {
-      if (minLength > 0) Strings.AT_LEAST: false,
-      if (uppercaseCharCount > 0) Strings.UPPERCASE_LETTER: false,
-      if (numericCharCount > 0) Strings.NUMERIC_CHARACTER: false,
-      if (specialCharCount > 0) Strings.SPECIAL_CHARACTER: false,
-      if (lowercaseCharCount > 0) Strings.LOWERCASE_LETTER: false
-    };
+  void setSelectedCondition(int minLength, uppercaseCharCount, numericCharCount, specialCharCount, lowercaseCharCount, lang) {
+    if (lang == 0) {
+      _selectedCondition = {
+        if (minLength > 0) Strings.AT_LEAST: false,
+        if (uppercaseCharCount > 0) Strings.UPPERCASE_LETTER: false,
+        if (numericCharCount > 0) Strings.NUMERIC_CHARACTER: false,
+        if (specialCharCount > 0) Strings.SPECIAL_CHARACTER: false,
+        if (lowercaseCharCount > 0) Strings.LOWERCASE_LETTER: false
+      };
+    } else {
+      _selectedCondition = {
+        if (minLength > 0) Strings.AT_LEAST_EN: false,
+        if (uppercaseCharCount > 0) Strings.UPPERCASE_LETTER_EN: false,
+        if (numericCharCount > 0) Strings.NUMERIC_CHARACTER_EN: false,
+        if (specialCharCount > 0) Strings.SPECIAL_CHARACTER_EN: false,
+        if (lowercaseCharCount > 0) Strings.LOWERCASE_LETTER_EN: false
+      };
+    }
   }
 
   //Checks condition new value and passed validator, sets that in map and return new value;

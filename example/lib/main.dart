@@ -54,6 +54,7 @@ class AppHome extends StatelessWidget {
                     numericCharCount: 3,
                     specialCharCount: 1,
                     lowercaseCharCount: 1,
+                    lang: 0,
                     width: 400,
                     height: 150,
                     onSuccess: () {

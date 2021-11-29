@@ -10,7 +10,7 @@ import 'Resource/Strings.dart';
 import 'Resource/MyColors.dart';
 
 class FlutterPwValidator extends StatefulWidget {
-  final int minLength, uppercaseCharCount, numericCharCount, specialCharCount, lowercaseCharCount;
+  final int minLength, uppercaseCharCount, numericCharCount, specialCharCount, lowercaseCharCount, lang;
   final Color defaultColor, successColor, failureColor;
   final double width, height;
   final Function onSuccess;
@@ -22,7 +22,7 @@ class FlutterPwValidator extends StatefulWidget {
       required this.minLength,
       required this.onSuccess,
       required this.controller,
-      // required this.lang,
+      this.lang = 0,
       this.uppercaseCharCount = 0,
       this.lowercaseCharCount = 0,
       this.numericCharCount = 0,
@@ -54,15 +54,20 @@ class _FlutterPwValidatorState extends State<FlutterPwValidator> {
   void validate() {
     //For each condition we called validators and get their new state
 
-    hasMinLength = conditionsHelper.checkCondition(widget.minLength, validator.hasMinLength, widget.controller, Strings.AT_LEAST, hasMinLength);
+    hasMinLength =
+        conditionsHelper.checkCondition(widget.minLength, validator.hasMinLength, widget.controller, widget.lang == 0 ? Strings.AT_LEAST : Strings.AT_LEAST_EN, hasMinLength);
 
-    hasMinUppercaseChar = conditionsHelper.checkCondition(widget.uppercaseCharCount, validator.hasMinUppercase, widget.controller, Strings.UPPERCASE_LETTER, hasMinUppercaseChar);
+    hasMinUppercaseChar = conditionsHelper.checkCondition(
+        widget.uppercaseCharCount, validator.hasMinUppercase, widget.controller, widget.lang == 0 ? Strings.UPPERCASE_LETTER : Strings.UPPERCASE_LETTER_EN, hasMinUppercaseChar);
 
-    hasMinLowercaseChar = conditionsHelper.checkCondition(widget.lowercaseCharCount, validator.hasMinLowercase, widget.controller, Strings.LOWERCASE_LETTER, hasMinLowercaseChar);
+    hasMinLowercaseChar = conditionsHelper.checkCondition(
+        widget.lowercaseCharCount, validator.hasMinLowercase, widget.controller, widget.lang == 0 ? Strings.LOWERCASE_LETTER : Strings.LOWERCASE_LETTER_EN, hasMinLowercaseChar);
 
-    hasMinNumericChar = conditionsHelper.checkCondition(widget.numericCharCount, validator.hasMinNumericChar, widget.controller, Strings.NUMERIC_CHARACTER, hasMinNumericChar);
+    hasMinNumericChar = conditionsHelper.checkCondition(
+        widget.numericCharCount, validator.hasMinNumericChar, widget.controller, widget.lang == 0 ? Strings.NUMERIC_CHARACTER : Strings.NUMERIC_CHARACTER_EN, hasMinNumericChar);
 
-    hasMinSpecialChar = conditionsHelper.checkCondition(widget.specialCharCount, validator.hasMinSpecialChar, widget.controller, Strings.SPECIAL_CHARACTER, hasMinSpecialChar);
+    hasMinSpecialChar = conditionsHelper.checkCondition(
+        widget.specialCharCount, validator.hasMinSpecialChar, widget.controller, widget.lang == 0 ? Strings.SPECIAL_CHARACTER : Strings.SPECIAL_CHARACTER_EN, hasMinSpecialChar);
 
     //Checks if all condition are true then call the user callback
     int conditionsCount = conditionsHelper.getter()!.length;
@@ -83,7 +88,7 @@ class _FlutterPwValidatorState extends State<FlutterPwValidator> {
     isFirstRun = true;
 
     //sets user entered value for each condition
-    conditionsHelper.setSelectedCondition(widget.minLength, widget.uppercaseCharCount, widget.numericCharCount, widget.specialCharCount, widget.lowercaseCharCount);
+    conditionsHelper.setSelectedCondition(widget.minLength, widget.uppercaseCharCount, widget.numericCharCount, widget.specialCharCount, widget.lowercaseCharCount, widget.lang);
 
     //Adds a listener callback on TextField to run after input get changed
     widget.controller.addListener(() {
@@ -124,11 +129,16 @@ class _FlutterPwValidatorState extends State<FlutterPwValidator> {
                 //Iterate through the condition map entries and generate new ValidationTextWidget for each item in Green or Red Color
                 children: conditionsHelper.getter()!.entries.map((entry) {
                   int? value;
-                  if (entry.key == Strings.AT_LEAST) value = widget.minLength;
-                  if (entry.key == Strings.UPPERCASE_LETTER) value = widget.uppercaseCharCount;
-                  if (entry.key == Strings.LOWERCASE_LETTER) value = widget.lowercaseCharCount;
-                  if (entry.key == Strings.NUMERIC_CHARACTER) value = widget.numericCharCount;
-                  if (entry.key == Strings.SPECIAL_CHARACTER) value = widget.specialCharCount;
+                  if (entry.key == Strings.AT_LEAST && widget.lang == 0) value = widget.minLength;
+                  if (entry.key == Strings.AT_LEAST_EN && widget.lang != 0) value = widget.minLength;
+                  if (entry.key == Strings.UPPERCASE_LETTER && widget.lang == 0) value = widget.uppercaseCharCount;
+                  if (entry.key == Strings.UPPERCASE_LETTER_EN && widget.lang != 0) value = widget.uppercaseCharCount;
+                  if (entry.key == Strings.LOWERCASE_LETTER && widget.lang == 0) value = widget.lowercaseCharCount;
+                  if (entry.key == Strings.LOWERCASE_LETTER_EN && widget.lang != 0) value = widget.lowercaseCharCount;
+                  if (entry.key == Strings.NUMERIC_CHARACTER && widget.lang == 0) value = widget.numericCharCount;
+                  if (entry.key == Strings.NUMERIC_CHARACTER_EN && widget.lang != 0) value = widget.numericCharCount;
+                  if (entry.key == Strings.SPECIAL_CHARACTER && widget.lang == 0) value = widget.specialCharCount;
+                  if (entry.key == Strings.SPECIAL_CHARACTER_EN && widget.lang != 0) value = widget.specialCharCount;
 
                   return new ValidationTextWidget(
                     color: isFirstRun
